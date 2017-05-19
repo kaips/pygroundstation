@@ -49,10 +49,10 @@ class genericstepper(steppercontrol):
         
         
     def move(self, direction, angle):
-        return self.move(direction, angle, 1)
+        return self.moveAngular(direction, angle, 4.0)
         
     def moveDuration(self, direction, angle, duration):
-        return self.move(direction, angle, angle/duration)
+        return self.moveAngular(direction, angle, angle/duration)
     
     # direction: CW/CCW
     # angle: absolute angle to be moved
@@ -63,7 +63,7 @@ class genericstepper(steppercontrol):
         
         steps = int(angle * self.gearratio * self.microsteps / self.stepperstepangle)
         
-        totalduration = angle / angularspeed
+        totalduration = angle / float(angularspeed)
         
         # TODO calculate ramps for the steppers
         step_t = totalduration/steps;

@@ -15,8 +15,9 @@ if(encoder_az.open(1)<0):
 
 
 print(str(encoder_az.readAngle()))
-stepper_az.moveAngular(0,10,7.0)
+#stepper_az.moveAngular(0,10,7.0)
 #stepper_el.moveAngular(1,10,3.1)
+stepper_az.moveDuration(0,10,1)
 print(str(encoder_az.readAngle()))
 
 stepper_az.close()
