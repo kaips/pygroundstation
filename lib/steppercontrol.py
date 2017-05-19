@@ -9,6 +9,7 @@ class steppercontrol(object):
         pass
     
     def close(self):
+        pass
     
     def stopAll(self):
         pass

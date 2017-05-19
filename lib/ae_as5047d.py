@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+from absoluteencoder import absoluteencoder
 import spidev
 import time
 from pprint import pprint
@@ -61,7 +62,7 @@ class as5047d(absoluteencoder):
   def open(self, param):
     self.spi.open(0,param)
     self.spi.mode = 0b01
-    print("AE_AS5047D: open("+param+")")
+    print("AE_AS5047D: open("+str(param)+")")
     
     # selfcheck
     errfl = self.read(self.ERRFL);
@@ -87,8 +88,9 @@ class as5047d(absoluteencoder):
   def readAngle(self):
     
     anglecom = self.read(self.ANGLECOM);
+    #print(str(anglecom))
     
-    return anglecom / 2^14 * 360;
+    return anglecom / 16384.0 * 360.0;
 
   def close(self):
     return 1;

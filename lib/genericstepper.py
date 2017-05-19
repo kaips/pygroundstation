@@ -1,4 +1,5 @@
 
+from steppercontrol import steppercontrol
 import RPi.GPIO as GPIO
 import time
 
@@ -8,7 +9,7 @@ class genericstepper(steppercontrol):
     SPUL = 0
     SDIR = 0
     
-    direction = self.CW
+    direction = steppercontrol.CW
     
     stepperstepangle = 0
     microsteps = 0
@@ -40,6 +41,7 @@ class genericstepper(steppercontrol):
         GPIO.cleanup()
         
     def stopAll(self):
+        pass
         
         
     def disable(self):
@@ -59,14 +61,14 @@ class genericstepper(steppercontrol):
     def moveAngular(self, direction, angle, angularspeed):
         GPIO.output(self.SEN, 0)                # activate 
         
-        steps = round(angle * self.gearratio * self.microsteps / self.stepperstepangle)
+        steps = int(angle * self.gearratio * self.microsteps / self.stepperstepangle)
         
         totalduration = angle / angularspeed
         
         # TODO calculate ramps for the steppers
         step_t = totalduration/steps;
         
-        print("genericstepper: moving("+str(direction)", "+str(angle)+", "+str(angularspeed)") = "+str(steps)+" steps at "+str(step_t))
+        print("genericstepper: moving("+str(direction)+", "+str(angle)+", "+str(angularspeed)+") = "+str(steps)+" steps at "+str(step_t))
         
         GPIO.output(self.SDIR,direction);       # set direction
         
