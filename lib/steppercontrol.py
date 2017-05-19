@@ -19,5 +19,8 @@ class steppercontrol(object):
     def move(self, direction, angle):
         pass
     
-    def move(self, direction, angle, angularspeed):
+    def moveAngular(self, direction, angle, angularspeed):
+        pass
+    
+    def moveDuration(self, direction, angle, duration):
         pass

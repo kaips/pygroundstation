@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+from lib.ae_as5047d import ae_as5047d
+from lib.genericstepper import genericstepper
 
 stepper_az = genericstepper()
 stepper_el = genericstepper()

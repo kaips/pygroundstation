@@ -47,15 +47,16 @@ class genericstepper(steppercontrol):
         
         
     def move(self, direction, angle):
-
         return self.move(direction, angle, 1)
         
+    def moveDuration(self, direction, angle, duration):
+        return self.move(direction, angle, angle/duration)
     
     # direction: CW/CCW
     # angle: absolute angle to be moved
     # angularspeed: in angle/sec
         
-    def move(self, direction, angle, angularspeed):
+    def moveAngular(self, direction, angle, angularspeed):
         GPIO.output(self.SEN, 0)                # activate 
         
         steps = round(angle * self.gearratio * self.microsteps / self.stepperstepangle)
@@ -63,16 +64,16 @@ class genericstepper(steppercontrol):
         totalduration = angle / angularspeed
         
         # TODO calculate ramps for the steppers
+        step_t = totalduration/steps;
         
-        
-        print("genericstepper: moving("+str(direction)", "+str(angle)+", "+str(angularspeed)") = "+str(steps)+" steps")
+        print("genericstepper: moving("+str(direction)", "+str(angle)+", "+str(angularspeed)") = "+str(steps)+" steps at "+str(step_t))
         
         GPIO.output(self.SDIR,direction);       # set direction
         
         for x in range(0,steps):
             GPIO.output(self.SPUL,1)
             GPIO.output(self.SPUL,0)
-            time.sleep(0.002)
+            time.sleep(step_t)
         
         
         

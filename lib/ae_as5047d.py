@@ -88,7 +88,7 @@ class as5047d(absoluteencoder):
     
     anglecom = self.read(self.ANGLECOM);
     
-    return anglecom;
+    return anglecom / 2^14 * 360;
 
   def close(self):
     return 1;
