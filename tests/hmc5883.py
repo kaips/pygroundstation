@@ -7,6 +7,14 @@ i2c = smbus.SMBus(1)
 
 HMC5883_ID = 0x1E
 
+def twos_complement(val, nbits):
+    """Compute the 2's complement of int value val"""
+    if val < 0:
+      val = (1 << nbits) + val
+    else:
+      if (val & (1 << (nbits - 1))) != 0:
+        val = val - (1 << nbits)
+    return val
 
 
 for cmd in range(1,20):
@@ -30,6 +38,11 @@ for cmd in range(1,20):
   xmag = (xhb<<8)|xlb;
   ymag = (yhb<<8)|ylb;
   zmag = (zhb<<8)|zlb;
+  
+  xmag = twos_complement(xmag,16);
+  ymag = twos_complement(ymag,16);
+  zmag = twos_complement(zmag,16);
+  
   
   #print("Status: "+str(i2c.read_byte_data(HMC5883_ID,9)));
   print("cmd: "+str(cmd)+"\t"+str(xmag)+"\t"+str(ymag)+"\t"+str(zmag))
