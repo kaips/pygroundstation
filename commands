@@ -1,0 +1,13 @@
+
+gs-232b hamlib code 603
+
+socat -d -d pty,raw,echo=0 pty,raw,echo=0
+
+rotctld -m 603 -r /dev/pts/2
+
+
+
+"kermit -l /dev/pts/23 -b 9600 -C c" reads:
+
+W171 045 (go to azz ell)
+C2 (return "Az=aaa EL=eee")
