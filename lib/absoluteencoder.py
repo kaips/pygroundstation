@@ -7,3 +7,5 @@ class absoluteencoder(object):
     def readAngle(self):
         pass
     
+    def setCalibration(self, offset):
+        pass

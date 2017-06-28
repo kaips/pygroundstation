@@ -2,6 +2,7 @@
 from steppercontrol import steppercontrol
 import RPi.GPIO as GPIO
 import time
+import threading
 
 class genericstepper(steppercontrol):
     
@@ -35,6 +36,8 @@ class genericstepper(steppercontrol):
         GPIO.output(self.SDIR,self.direction)
         GPIO.output(self.SEN, 0)
         
+        self.lock = threading.Lock()
+        
         print("genericstepper: opened")
         
     def close(self):
@@ -59,6 +62,9 @@ class genericstepper(steppercontrol):
     # angularspeed: in angle/sec
         
     def moveAngular(self, direction, angle, angularspeed):
+        
+        self.lock.acquire()
+        
         GPIO.output(self.SEN, 0)                # activate 
         
         steps = int(angle * self.gearratio * self.microsteps / self.stepperstepangle)
@@ -77,7 +83,7 @@ class genericstepper(steppercontrol):
             GPIO.output(self.SPUL,0)
             time.sleep(step_t)
         
-        
+        self.lock.release()
         
         
         

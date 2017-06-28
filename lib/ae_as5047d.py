@@ -15,6 +15,9 @@ class as5047d(absoluteencoder):
   MAG = 	0x3FFD
   ANGLEUNC=0x3FFE
   ANGLECOM=0x3FFF
+  
+  offsetset = 0
+  offset = 0
 
   def __init__(self):
     self.spi = spidev.SpiDev()
@@ -84,13 +87,28 @@ class as5047d(absoluteencoder):
     print("AE_AS5047D: AGC = "+str(diaagcs&0xFF));
     
     return 1;
+
+  def setCalibration(self, offset):
+    self.offset = offset
+    self.offsetset = 1
+        
       
   def readAngle(self):
     
     anglecom = self.read(self.ANGLECOM);
     #print(str(anglecom))
     
-    return anglecom / 16384.0 * 360.0;
+    angleprecal = anglecom / 16384.0 * 360.0;
+    
+    if(self.offsetset):
+        angleprecal += self.offset
+        
+        if(angleprecal<0):
+            angleprecal += 360
+        if(angleprecal>360):
+            angleprecal -= 360
+            
+    return angleprecal;
 
   def close(self):
     return 1;

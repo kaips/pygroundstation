@@ -38,9 +38,11 @@ else:
 #if(encoder_az.open(1)<0):
 #    print ("main: encoder_az open error");
 #    sys.exit(0);
+#encoder_az.setCalibration(15)
 #if(encoder_el.open(0)<0):
 #    print("main: encoder-el open error");
 #    sys.exit(0);
+#encoder_el.setCalibration(15)
     
 control = rotorcontrol()
 gsparser = gs232b()
