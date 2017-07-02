@@ -5,7 +5,10 @@ class absolutesensor(object):
     def open(self):
         pass
     
-    def readAngle(self):
+    def readBearing(self):
+        pass
+    
+    def readAzEl(self):
         pass
     
     def close(self):

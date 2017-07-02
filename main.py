@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 #from lib.ae_as5047d import as5047d
+#from lib.as_hmc5883 import hmc5883
 #from lib.genericstepper import genericstepper
 from lib.gs232b import gs232b
 from lib.rotorcontrol import rotorcontrol

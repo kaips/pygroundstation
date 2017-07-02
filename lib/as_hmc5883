@@ -1,0 +1,74 @@
+
+from absolutesensor import absolutesensor
+import smbus
+
+
+class hmc5883(absolutesensor):
+    
+    HMC5883_ID = 0x1E
+    
+    def open(self):
+        self.i2c = smbus.SMBus(1)
+    
+    def open(self, i2c):
+        self.i2c = i2c
+    
+    def readBearing(self):
+        self.i2c.write_byte_data(HMC5883_ID,2, 1); # single measurement mode
+
+        xhb = self.i2c.read_byte_data(HMC5883_ID,3)
+        xlb = self.i2c.read_byte_data(HMC5883_ID,4)
+        
+        zhb = self.i2c.read_byte_data(HMC5883_ID,5)
+        zlb = self.i2c.read_byte_data(HMC5883_ID,6)
+        
+        yhb = self.i2c.read_byte_data(HMC5883_ID,7)
+        ylb = self.i2c.read_byte_data(HMC5883_ID,8)
+        
+        xmag = (xhb<<8)|xlb;
+        ymag = (yhb<<8)|ylb;
+        zmag = (zhb<<8)|zlb;
+        
+        xmag = twos_complement(xmag,16);
+        ymag = twos_complement(ymag,16);
+        zmag = twos_complement(zmag,16);
+        
+        print("cmd: "+str(cmd)+"\t"+str(xmag)+"\t"+str(ymag)+"\t"+str(zmag))
+
+        # return this
+        return {'x':xmag, 'y':ymag,'z':zmag};
+    
+    
+    # calculate Az/El from bearing
+    def readAzEl(self):
+        
+        # this calculation assumes sensor orientation:
+        # x:
+        # y:
+        # z: 
+
+        r = self.readBearing();
+        
+        r['x']
+        
+    
+    def close(self):
+        pass
+
+
+    def twos_complement(val, nbits):
+        """Compute the 2's complement of int value val"""
+        if val < 0:
+        val = (1 << nbits) + val
+        else:
+        if (val & (1 << (nbits - 1))) != 0:
+            val = val - (1 << nbits)
+        return val
+
+
+
+
+
+
+  
+  
